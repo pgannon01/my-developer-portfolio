@@ -17,19 +17,38 @@ export const authorsQuery = gql`
     }
 `
 
+// To help avoid code repitition, we can create a GraphQL fragment to re-use some fields on our model
+const PROJECT_FRAGMENT = gql`
+    fragment ProjectDetails on Project {
+        name
+        slug
+        description
+        tags
+        demo
+        sourceCode
+        image {
+            url
+        }
+    }
+`
+
 // With the client defined, we can use it to pass a query to the GraphCMS API.
 // Using the query we made in GraphCMS, we can add that to a query variable to use with our now defined Client
 export const projectsQuery = gql`
+    ${PROJECT_FRAGMENT}
     query GetProjects {
         projects {
-            name
-            slug
-            description
-            demo
-            sourceCode
-            image {
-                url
-            }
+            ...ProjectDetails
+        }
+    }
+`
+
+// This is for the individual project, not for all projects like the projectsQuery above
+export const projectQuery = gql`
+    ${PROJECT_FRAGMENT}
+    query GetProject($slug: String!) {
+        project(where: { slug: $slug }) {
+            ...ProjectDetails
         }
     }
 `
