@@ -15,3 +15,6 @@
 	<slot />
 </main>
 <Footer />
+
+<!-- TODO: Left off on CONTINUOUS DEPLOYMENT WITH VERCEL -->
+<!-- Unable to successfully deploy for some reason, and can't push the project to github either for some reason, find out why -->
